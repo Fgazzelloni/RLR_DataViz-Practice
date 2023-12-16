@@ -1,0 +1,134 @@
+---
+title: "Example"
+format: html
+editor: visual
+---
+
+
+```{r}
+#| eval: false
+#| echo: true
+pkgs <- c("tidyverse","gapminder","ggtext","sysfonts","showtext","ggthemes","cowplot")
+install.packages(pkgs)
+```
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(gapminder)
+library(ggtext)
+library(sysfonts)
+library(showtext)
+library(ggthemes)
+library(cowplot)
+```
+
+```{r}
+gapminder::gapminder
+```
+
+```{r}
+ggplot(data=gapminder)+
+  geom_point(aes(x=gdpPercap,y=lifeExp))
+```
+
+```{r}
+ggplot(data=gapminder)+
+  geom_point(aes(x=gdpPercap,y=lifeExp, color=continent))
+```
+
+```{r}
+ggplot(data=gapminder)+
+  geom_point(aes(x=gdpPercap,y=lifeExp, color=continent))+
+  scale_y_log10()+
+  scale_x_log10()
+```
+
+```{r}
+ggplot(data=gapminder,
+       mapping=aes(x=gdpPercap,y=lifeExp))+
+  geom_point(aes(color=continent))+
+  scale_y_log10()+
+  scale_x_log10()+
+  geom_smooth()
+```
+
+```{r}
+ggplot(data=gapminder,
+       mapping=aes(x=gdpPercap,y=lifeExp,color=continent))+
+  geom_point()+
+  scale_y_log10()+
+  scale_x_log10()+
+  geom_smooth(se=F)
+```
+
+```{r}
+ggplot(data=gapminder,
+       mapping=aes(x=gdpPercap,y=lifeExp,fill=continent))+
+  geom_point(color="grey",shape=21,stroke=0.5)+
+  scale_y_log10()+
+  scale_x_log10()+
+  geom_smooth(aes(color=continent),se=F)
+```
+
+```{r}
+options(scipen = 9999)
+```
+
+```{r}
+sysfonts::font_add_google("Preahvihear","Preahvihear")
+showtext::showtext_auto()
+showtext::showtext_opts(dpi=320)
+```
+
+```{r}
+#| message: false
+#| warning: false
+ggplot(data=gapminder,
+       mapping=aes(x=gdpPercap,y=lifeExp,fill=continent))+
+  geom_point(color="grey",shape=21,stroke=0.5)+
+  scale_y_log10()+
+  scale_x_log10()+
+  geom_smooth(aes(color=continent),se=F,key_glyph = "timeseries")+
+  scale_fill_manual(values =RColorBrewer::brewer.pal(6, "Accent"),
+                    aesthetics = c("colour", "fill"))+
+  labs(title="Global Life Expectancy based on Gdp per capita",
+       subtitle="",
+       caption="R-Ladies Rome - Data Visualization Practice Session - GapMinder Data")+
+  guides(fill="none",color=guide_legend(title = "Continent"))+
+  ggthemes::theme_fivethirtyeight(base_size = 14,base_family = "Preahvihear")+
+  theme(axis.title = element_text())
+```
+
+```{r}
+#| message: false
+#| warning: false
+p <- ggplot(data=gapminder,
+       mapping=aes(x=gdpPercap,y=lifeExp,fill=continent))+
+  geom_point(color="grey",shape=21,stroke=0.5)+
+  scale_y_log10(expand = expansion(c(0, 0.02)))+
+  scale_x_log10(expand = expansion(c(0, 0.02)))+
+  geom_smooth(aes(color=continent),se=F,key_glyph = "timeseries")+
+  scale_fill_manual(values =RColorBrewer::brewer.pal(6, "Accent"),
+                    aesthetics = c("colour", "fill"))+
+  labs(title="Global Life Expectancy based on Gdp per capita",
+       subtitle="by continent",
+       caption="R-Ladies Rome - Data Visualization Practice Session - GapMinder Data",
+       x="GDP",y="Life Expectancy")+
+  guides(fill="none",color=guide_legend(title = ""))+
+  ggthemes::theme_fivethirtyeight(base_size = 10,base_family = "Preahvihear")+
+  coord_cartesian(clip = "off")+
+  theme(axis.title = element_text(size=9),
+        plot.title = ggtext::element_textbox_simple(size = 15,
+                                                    vjust = 1,
+                                                    margin = margin(5, 0, 5, 0)),
+        plot.caption = element_text(size = 5,hjust = 1),
+        legend.position = "bottom")
+p
+```
+
+```{r}
+#| eval: false
+ggsave("le_gdp.png",device = "png",dpi=320)
+```
