@@ -2,7 +2,7 @@
 
 
 ## R-Ladies Rome Data Visualization Practice Session 
-🎬 Get ready for a hands-on experience! 🔥
+🎬 Get ready for a hands-on experience! 🔥 - Friday, December 15 2023 at 7:15PM CET on Zoom
 
 🇮🇹 After two fantastic sessions with data visualization experts ([Cédric Scherer](https://rladiesrome.quarto.pub/website/talks/2023/meetup/11102023/), and [Cara Thompson](https://rladiesrome.quarto.pub/website/talks/2023/meetup/11302023/)), it's time to put your skills into practice! 
 
